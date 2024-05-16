@@ -58,13 +58,13 @@ Route::middleware('auth')->group(function () {
             ->name('topups');
             Route::get('/wallet/withdrawls', [WalletTransactionController::class, 'wallet_withdrawls'])
             ->name('withdrawls');
-            Route::resource('wallet_transactions', [WalletTransactionController::class]);
+            Route::resource('wallet_transactions', WalletTransactionController::class);
         });
         Route::middleware('can:manage applicants')->group(function(){
-            Route::resource('project_applicants', [ProjectApplicantController::class]);
+            Route::resource('project_applicants', ProjectApplicantController::class);
         });
         Route::middleware('can:manage projects')->group(function(){
-            Route::resource('projects', [ProjectController::class]);
+            Route::resource('projects', ProjectController::class);
 
             Route::post('/project/{ProjectApplicant}/completed', [ProjectController::class, 'complete_project_store'])
             ->name('complete_project.store');
@@ -73,16 +73,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/project/{project}/tools/store', [WalletTransactionController::class, 'tools_store'])
             ->name('projects.tools.store');
 
-            Route::resource('project_tools', [ProjectToolController::class]);
+            Route::resource('project_tools', ProjectToolController::class);
         });
         Route::middleware('can:manage categories')->group(function(){
-            Route::resource('catagories', [CategoryController::class]);
+            Route::resource('catagories', CategoryController::class);
         });
         Route::middleware('can:manage tools')->group(function(){
-            Route::resource('tools', [ToolController::class]);
+            Route::resource('tools', ToolController::class);
         });
     });
-    
+
 });
 
 require __DIR__.'/auth.php';
