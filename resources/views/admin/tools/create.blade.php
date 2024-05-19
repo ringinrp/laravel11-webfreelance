@@ -17,7 +17,7 @@
                     @endforeach
                 @endif
                 
-                <form method="POST" action="#" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.tools.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div>
@@ -35,7 +35,7 @@
                     <div class="flex items-center justify-end mt-4">
             
                         <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                            Add New Tools
+                            Add New Tool
                         </button>
                     </div>
                 </form>
