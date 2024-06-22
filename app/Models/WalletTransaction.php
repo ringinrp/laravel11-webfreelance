@@ -16,7 +16,7 @@ class WalletTransaction extends Model
         'is_paid',
         'proof',
         'bank_name',
-        'bank-account_name',
+        'bank_account_name',
         'bank_account_number'
     ];
 

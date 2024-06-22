@@ -44,6 +44,9 @@ class RolePermissionSeeder extends Seeder
             'manage project tools',
             'manage wallets',
             'manage applicants',
+
+            'topup wallet',
+            'withdraw wallet'
         ];
         $clientRole->syncPermissions($clientPermissions);
 
@@ -53,7 +56,8 @@ class RolePermissionSeeder extends Seeder
 
         $freelancerPermissions = [
             'apply job',
-            'withdraw wallet'
+            'withdraw wallet',
+            'topup wallet'
         ];
         $freelancerRole->syncPermissions($freelancerPermissions);
 
@@ -73,5 +77,6 @@ class RolePermissionSeeder extends Seeder
             'balance'=>0,
         ]);
         $user->wallet()->save($wallet);
+    
     }
 }
