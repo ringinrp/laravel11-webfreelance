@@ -10,11 +10,11 @@ use App\Http\Controllers\ProjectToolController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\WalletTransactionController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/details/{project:slug}', [FrontController::class, 'details'])->name('front.details');
+Route::get('/category/{category:slug}', [FrontController::class, 'category'])->name('front.category');
+Route::get('/out-of-connect', [FrontController::class, 'out-of-connect'])->name('front.out-of-connect');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,23 +28,24 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:withdraw wallet')->group(function () {
         Route::get('/dashboard/wallet', [DashboardController::class, 'wallet'])
             ->name('dashboard.wallet');
-        Route::get('/dashboard/wallet/withdraw', [DashboardController::class, 'wallet_withdraw'])
+
+        Route::get('/dashboard/wallet/withdraw', [DashboardController::class, 'withdraw_wallet'])
             ->name('dashboard.wallet.withdraw');
-        Route::post('/dashboard/wallet/withdraw/store', [DashboardController::class, 'wallet_withdraw_store'])
+
+        Route::post('/dashboard/wallet/withdraw/store', [DashboardController::class, 'withdraw_wallet_store'])
             ->name('dashboard.wallet.withdraw.store');
     });
 
     Route::middleware('can:topup wallet')->group(function () {
-        Route::get('/dashboard/wallet/topup', [DashboardController::class, 'topup_wallet'])
-            ->name('dashboard.wallet.topup');
-        Route::post('/dashboard/wallet/topup/store', [DashboardController::class, 'topup_wallet_store'])
-            ->name('dashboard.wallet.topup.store');
+        Route::get('/dashboard/wallet/topup', [DashboardController::class, 'topup_wallet'])->name('dashboard.wallet.topup');
+
+        Route::post('/dashboard/wallet/topup/store', [DashboardController::class, 'topup_wallet_store'])->name('dashboard.wallet.topup.store');
     });
 
     Route::middleware('can:apply job')->group(function () {
         Route::get('/apply/{project:slug}', [FrontController::class, 'apply_job'])
             ->name('front.apply_job');
-        Route::post('/apply/{project:slug}/submit', [FrontController::class, 'apply_job_stor'])
+        Route::post('/apply/{project:slug}/submit', [FrontController::class, 'apply_job_store'])
             ->name('front.apply_job.store');
         Route::get('/dashboard/proposals', [DashboardController::class, 'proposals'])
             ->name('dashboard.proposals');
