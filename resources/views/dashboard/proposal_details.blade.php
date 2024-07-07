@@ -59,11 +59,10 @@
                             YOU'RE HIRED
                         </span>
                         @elseif($projectApplicant->status == 'Waiting')
-
                         <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
                             WAITING FOR APPROVAL
                         </span> 
-                        @elseif($projectApplicant->status == 'Rejected')
+                        @elseif($projectApplicant->status == 'Reject')
                         <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-red-500 text-white">
                             REJECTED
                         </span>
