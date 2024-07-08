@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProjectApplicant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectApplicantController extends Controller
 {
@@ -37,6 +38,10 @@ class ProjectApplicantController extends Controller
     public function show(ProjectApplicant $projectApplicant)
     {
         //
+        if($projectApplicant->project->client_id != auth()->id()){
+            abort(403, 'Anda bukan freelancer yang mengajukan proposal ini');
+        }
+        return view('admin.projects.applicant_details', compact('projectApplicant'));
     }
 
     /**
@@ -53,7 +58,26 @@ class ProjectApplicantController extends Controller
     public function update(Request $request, ProjectApplicant $projectApplicant)
     {
         //
+        DB::transaction(function() use ($projectApplicant){
+            $projectApplicant->update([
+                'status' => 'Hired',
+            ]);
+
+            ProjectApplicant::where('project_id', $projectApplicant->project_id)
+            ->where('id', '!=', $projectApplicant->id)
+            ->where('status', '=', 'Waiting')
+            ->update([
+                'status' => 'Rejected',
+            ]);
+
+            $projectApplicant->project->update([
+                'has_started' => true,
+            ]);
+        });
+
+        return redirect()->route('admin.projects.show', [$projectApplicant->project, $projectApplicant->id]);
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -8,21 +8,22 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
 
-                @if($project->has_finished)
-                    @if($projectApplicant->status == 'Hired')
-                    <span class="text-white font-bold bg-green-500 rounded-2xl w-full p-5">
-                        Projek telah selesai dan revenue sudah ditambahkan kepada Wallet Anda
-                    </span>
+
+                    @if($project->has_finished)
+                        @if($projectApplicant->status == 'Hired')
+                        <span class="text-white font-bold bg-green-500 rounded-2xl w-full p-5">
+                            Projek telah selesai dan revenue sudah ditambahkan kepada Wallet Anda
+                        </span>
+                        @else
+                        <span class="text-white font-bold bg-green-500 rounded-2xl w-full p-5">
+                            Project telah selesai, silahkan apply pada projek tersedia lainnya
+                            </span>
+                        @endif
                     @else
-                    <span class="text-white font-bold bg-green-500 rounded-2xl w-full p-5">
-                        Projek telah selesai, silakan apply projek lain
-                    </span>
+                        <span class="text-white font-bold bg-cyan-300 rounded-2xl w-full p-5">
+                            Project masih dalam tahap pengembangan
+                        </span>
                     @endif
-                    @else
-                    <span class="text-white font-bold bg-cyan-500 rounded-2xl w-full p-5">
-                        Projek masih dalam tahap pengembangan !!
-                    </span>
-                @endif
 
 
 
@@ -30,13 +31,13 @@
 
                 <div class="item-card flex flex-row gap-y-10 justify-between md:items-center">
                     <div class="flex flex-row items-center gap-x-3">
-                        <img src="{{ Storage::url($project->thumbnail) }}" alt="" class="rounded-2xl object-cover w-[120px] h-[90px]">
+                        <img src="{{ Storage::url($projectApplicant->project->thumbnail) }}" alt="" class="rounded-2xl object-cover w-[120px] h-[90px]">
                         <div class="flex flex-col">
                             <h3 class="text-indigo-950 text-xl font-bold">{{ $project->name }}</h3>
                             <p class="text-slate-500 text-sm">{{ $project->category->name }}</p>
                         </div>
                     </div>
-                    <a href="{{ route('front.details', $project->slug) }}" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
+                    <a href="" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
                         View Details
                     </a>
                     
@@ -49,24 +50,24 @@
                         <div class="flex flex-row gap-x-4 items-center">
                             <img src="{{ Storage::url($projectApplicant->freelancer->avatar) }}" alt="" class="rounded-full object-cover w-[70px] h-[70px]">
                             <div class="flex flex-col">
-                                <h3 class="text-indigo-950 text-xl font-bold">{{ $projectApplicant->freelancer->name  }}</h3>
-                                <p class="text-slate-500 text-sm">{{ $projectApplicant->freelancer->occupation }}</p>
+                                <h3 class="text-indigo-950 text-xl font-bold">{{ $projectApplicant->freelancer->name }}</h3>
+                                <p class="text-slate-500 text-sm">{{ $projectApplicant->freelancer->occupation }} </p>
                             </div>
                         </div>
 
-                        @if($projectApplicant->status == 'Hired')
-                        <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
-                            YOU'RE HIRED
-                        </span>
-                        @elseif($projectApplicant->status == 'Waiting')
-                        <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
-                            WAITING FOR APPROVAL
-                        </span> 
-                        @elseif($projectApplicant->status == 'Reject')
-                        <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-red-500 text-white">
-                            REJECTED
-                        </span>
-                        @endif 
+                        @if($projectApplicant->status == 'hired')
+                            <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
+                                YOU'RE HIRED
+                            </span>
+                        @elseif($projectApplicant->status == 'waiting')
+                            <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
+                                WAITING FOR APPROVAL
+                            </span> 
+                        @elseif($projectApplicant->status == 'rejected')
+                            <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-red-500 text-white">
+                                REJECTED
+                            </span> 
+                        @endif
 
                     </div>
                 </div>
@@ -74,7 +75,7 @@
                     {{ $projectApplicant->message }}
                 </p>
                 <p class="text-slate-500 text-sm">
-                    {{ $projectApplicant->created_at->format('M d, Y') }}
+                    {{ $projectApplicant->created_at->format('D m, Y') }}
                 </p>
 
                 @if($projectApplicant->status == 'Hired')
@@ -103,7 +104,7 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6.25 9.67976V12.4798C6.25 14.0198 7.50001 15.2598 9.04001 15.2498L12.72 15.2198C13.23 15.2198 13.64 14.7998 13.64 14.2998V11.5298C13.64 9.99977 12.4 8.75977 10.87 8.75977H7.17999C6.65999 8.75977 6.25 9.16976 6.25 9.67976Z" fill="#292D32"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.75 10.0196V13.9996C17.75 14.4296 17.27 14.6896 16.91 14.4496L14.99 13.1696C14.84 13.0696 14.75 12.8996 14.75 12.7196V11.2996C14.75 11.1196 14.84 10.9496 14.99 10.8496L16.91 9.56964C17.27 9.32964 17.75 9.58963 17.75 10.0196Z" fill="#292D32"/>
                         </svg>
-                <p class="text-indigo-950 text-lg font-bold">{{ $projectApplicant->project->email }}</p>
+                <p class="text-indigo-950 text-lg font-bold">{{ $projectApplicant->project->owner->email }}</p>
                         
                 </div>
                 <hr class="my-5">
@@ -118,13 +119,12 @@
                         </svg>
                         
                     <div>
-                        <h3 class="text-indigo-950 text-xl font-bold">Income Rp {{ number_format($proposal->project->budget, 0, ',','.' )}}</h3>
+                        <h3 class="text-indigo-950 text-xl font-bold">Income Rp {{number_format($project->budget, 0, ',','.')}} </h3>
                     <p class="text-slate-500 text-md">
                         Revenue akan ditambahkan kepada Wallet Anda apabila projek sudah selesai.
                     </p>
                     </div>
                 </div>
-
                 @elseif($projectApplicant->status == 'Rejected')
                 <hr class="my-5">
                 <div class="flex flex-row gap-x-3 items-center">
@@ -141,12 +141,8 @@
                     </p>
                     </div>
                 </div>
-                
                 @endif
-
                 
-  
-
             </div>
         </div>
     </div>

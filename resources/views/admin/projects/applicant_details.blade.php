@@ -45,18 +45,18 @@
                         </div>
                     </div>
 
-                    @if($projectApplicant->status == 'Hired')
+                    @if($projectApplicant->status == 'hired')
                     <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
-                        HIRED
+                        hired
                     </span>
-                    @elseif($projectApplicant->status == 'Waiting')
+                    @elseif($projectApplicant->status == 'waiting')
 
                     <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
-                        WAITING FOR APPROVAL
+                        waiting FOR APPROVAL
                     </span> 
-                    @elseif($projectApplicant->status == 'Rejected')
+                    @elseif($projectApplicant->status == 'rejected')
                     <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-red-500 text-white">
-                        REJECTED
+                        rejected
                     </span>
                     @endif
 
@@ -67,7 +67,7 @@
                     {{$projectApplicant->message}}
                 </p>
 
-                @if($projectApplicant->status == 'Hired')
+                @if($projectApplicant->status == 'hired')
                 <hr class="my-5">
                 <h3 class="text-indigo-950 text-xl font-bold">Setup Meeting with Freelancer</h3>
                 <div class="flex flex-row gap-x-4 items-center border border-slate-200 w-fit px-5 py-3 rounded-2xl">
@@ -80,17 +80,10 @@
                 <p class="text-indigo-950 text-lg font-bold">{{$projectApplicant->freelancer->email}}</p>
                         
                 </div>
-                @elseif($projectApplicant->status == 'Waiting')
-                {{-- <form method="POST" action="{{route('admin.reply_applicant.update', $projectApplicant->id)}}" enctype="multipart/form-data">
-                    @csrf
-
-                    <button type="submit" class="mt-2 w-full font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                        Approve & Hire Now
-                    </button>
-                </form> --}}
+                @elseif($projectApplicant->status == 'waiting')
                 <form method="POST" action="{{route('admin.project_applicants.update', $projectApplicant->id)}}" enctype="multipart/form-data">
                     @csrf
-@method('PUT')
+                    @method('PUT')
                     <button type="submit" class="mt-2 w-full font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
                         Approve & Hire Now
                     </button>
