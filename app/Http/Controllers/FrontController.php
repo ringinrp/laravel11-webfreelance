@@ -22,6 +22,10 @@ class FrontController extends Controller
         return view('front.index', compact('categories','projects'));
     }
 
+    public function out_of_connct(){
+        return view('front.out_of_connect');
+    }
+
     public function category(Category $category){
         return view('front.category', compact('category'));
     }
@@ -38,7 +42,7 @@ class FrontController extends Controller
             return redirect()->route('dashboard.proposals');
         }
 
-        if ($user->connect = 0) {
+        if ($user->connect == 0) {
            return redirect()->route('front.out_of_connect');
         }
 
@@ -56,7 +60,7 @@ class FrontController extends Controller
             return redirect()->route('dashboard.proposals');
         }
 
-        if ($user->connect = 0) {
+        if ($user->connect == 0) {
            return redirect()->route('front.out_of_connect');
         }else {
             $user->decrement('connect', 1);

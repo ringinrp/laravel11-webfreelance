@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="flex flex-row items-center gap-x-3">
-                        <a href="#" class="font-bold py-4 px-6 bg-orange-500 text-white rounded-full">
+                        <a href="{{ route('front.details', $project->slug) }}" class="font-bold py-4 px-6 bg-orange-500 text-white rounded-full">
                             Preview
                         </a>
                         <a href="{{ route('admin.projects.tools', $project) }}" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
